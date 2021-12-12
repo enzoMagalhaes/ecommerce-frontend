@@ -6,20 +6,21 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 
-import { styled } from '@mui/material/styles';
-
 import TopBar from './components/topbar.js'
 import Product from './components/product.js'
 
-function App(props){
-
-  const productsa = [1,2,3]
+export default function NavigationPage(){
   
   const [Products,setProducts] = useState({loading: true,products: null})
+  const [Search,setSearch] = useState("")
   
+  const onSearchChange = (e) => {
+    setSearch(e.target.value)
+  }
+
   const getProducts = () => {
     setProducts({loading:true})
-    const apiUrl = 'http://127.0.0.1:8000/'
+    const apiUrl = 'http://127.0.0.1:8000/search?search=' + Search
     fetch(apiUrl)
       .then(response => response.json())
       .then(products => {
@@ -29,7 +30,7 @@ function App(props){
 
   useEffect(() => {
     getProducts()
-  }, [setProducts])
+  }, [Search])
 
 
   const render_products = () => {
@@ -42,7 +43,6 @@ function App(props){
                   <Product description={product.description} price={product.price} amount_sold={product.amount_sold} 
                   img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate}/>
               )
-
     }
   }
 
@@ -53,7 +53,7 @@ function App(props){
       <Grid container spacing={2}>
 
         <Grid xs={12}>
-          <TopBar/>
+          <TopBar searchfunc={onSearchChange}/>
         </Grid>
 
         <Grid item xs={3}>
@@ -79,5 +79,3 @@ function App(props){
   )
 
 }
-
-export default App

@@ -79,13 +79,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "black",
     fontWeight: 'bold'
   },
-
-
-
-
 }))
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
 
   const classes = useStyles()
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -104,11 +100,12 @@ export default function PrimarySearchAppBar() {
               </Grid>
 
               <Grid item xs={4}>
-                  <Search>
+                  <Search >
                     <SearchIconWrapper>
                       <SearchIcon />
                     </SearchIconWrapper>
                     <StyledInputBase
+                      onChange={props.searchfunc}
                       placeholder="Pesquisar"
                       inputProps={{ 'aria-label': 'search' }}
                     />

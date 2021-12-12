@@ -15,7 +15,7 @@ export default function ProductDisplay(props) {
 
     if (props.is_promotion){  
 
-      let discounted_price = props.price/props.discount_rate
+      let discounted_price = props.price*(1-props.discount_rate)
       discounted_price = parseFloat(discounted_price).toFixed(2)
 
       return {del_price:props.price,price:discounted_price}
