@@ -39,9 +39,8 @@ function App(props){
     else{
       // need to return the map directly
       return Products.products.map(product =>
-                <Grid item xs={2.4}>
-                  <Product/>
-                </Grid>
+                  <Product description={product.description} price={product.price} amount_sold={product.amount_sold} 
+                  img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate}/>
               )
 
     }

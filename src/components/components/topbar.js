@@ -125,7 +125,7 @@ export default function PrimarySearchAppBar() {
 
 
               <Grid item xs={1.25}>     
-                  <Button variant="outlined" className={classes.signin}
+                  <Button variant="outlined" className={classes.signin} disableRipple='true'
 
                   sx={{
                     ':hover': {
@@ -139,8 +139,9 @@ export default function PrimarySearchAppBar() {
               </Grid>
 
 
-              <Grid item className={classes.griditem} xs={1.5}>     
-                  <Button variant="contained"  className={classes.register}
+              <Grid item className={classes.griditem} xs={1.5}> 
+                  
+                  <Button variant="contained"  className={classes.register} disableRipple='true'
                   sx={{
                     ':hover': {
                       backgroundColor: "black",
@@ -149,8 +150,8 @@ export default function PrimarySearchAppBar() {
                   }}
                   >
                     Cadastrar-se
-
                   </Button>
+
               </Grid>
 
           </Grid>
