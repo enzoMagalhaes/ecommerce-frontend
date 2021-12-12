@@ -1,6 +1,6 @@
 
 
-import React from 'react'
+import React , {useState,useEffect} from 'react'
 import Filters from './components/filters.js'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -11,7 +11,42 @@ import { styled } from '@mui/material/styles';
 import TopBar from './components/topbar.js'
 import Product from './components/product.js'
 
-function App(){
+function App(props){
+
+  const productsa = [1,2,3]
+  
+  const [Products,setProducts] = useState({loading: true,products: null})
+  
+  const getProducts = () => {
+    setProducts({loading:true})
+    const apiUrl = 'http://127.0.0.1:8000/'
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(products => {
+        setProducts({loading:false,products:products})
+      })
+  }
+
+  useEffect(() => {
+    getProducts()
+  }, [setProducts])
+
+
+  const render_products = () => {
+    if(Products.loading){
+      return <p> Loading...</p>
+    }
+    else{
+      // need to return the map directly
+      return Products.products.map(product =>
+                <Grid item xs={2.4}>
+                  <Product/>
+                </Grid>
+              )
+
+    }
+  }
+
 
   return (
     <React.Fragment>
@@ -30,18 +65,12 @@ function App(){
           
           <Grid container spacing={2}>
 
-            <Grid item xs={6} sx={{backgroundColor: 'white'}}>
-              <Product/>
-            </Grid>
-
-            <Grid item xs={6} sx={{backgroundColor: 'white'}}>
-              <Product/>
-            </Grid>
+            {render_products()}
 
           </Grid>
 
 
-          <Pagination count={10} />
+          <Pagination count={10} size="large" />
         </Grid>
 
       </Grid>
