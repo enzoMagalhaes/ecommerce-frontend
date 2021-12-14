@@ -9,8 +9,6 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 
 
 export default function ProductDisplay(props) {
-  const [value, setValue] = React.useState(4);
-
   const handle_prices = () => {
 
     if (props.is_promotion){  
@@ -71,7 +69,7 @@ export default function ProductDisplay(props) {
           <Grid container justify="space-between">
 
             <Typography variant="body2" color="text.secondary">
-              <FavoriteBorderOutlinedIcon/> <Rating name="read-only" value={value} readOnly />
+              <FavoriteBorderOutlinedIcon/> <Rating name="read-only" value={props.rating} readOnly />
             </Typography>
 
 
