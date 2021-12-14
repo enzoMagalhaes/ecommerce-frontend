@@ -17,6 +17,9 @@ export default function NavigationPage(){
   const [Products,setProducts] = useState({loading: true,products: null})
 
   ////////////////////////////////////////////
+
+  // SEARCH ENGINE
+
   const [Search,setSearch] = useState("")
   
   const onSearchChange = (e) => {
@@ -41,6 +44,10 @@ export default function NavigationPage(){
 
 
   /////////////////////////////////////////////
+
+
+  // FILTERS ENGINE
+
 
   const [celulares,setcelulares] = useState(false)
   const [eletronicos,seteletronicos] = useState(false)
@@ -89,7 +96,7 @@ export default function NavigationPage(){
 
     getProductsFilter()
   }, [celulares,eletronicos,relogios,calcados,bolsas,roupas,nacional,importado,novo,usado,promocao,frete_gratis,min_price,max_price,rating])
-
+  /////////////////////////////////////////////////////////
 
 
   const render_products = () => {
