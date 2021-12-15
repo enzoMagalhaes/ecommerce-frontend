@@ -41,7 +41,8 @@ export default function ProductDisplay(props) {
   }
 
   return (
-    <Grid id={props.id} item component={Card} xs={2.4} sx={{maxWidth: 200, marginLeft:1, marginTop: 2}}>
+    <Grid key={props.id} id={props.id} item component={Card} xs={2.4} sx={{maxWidth: 200, marginLeft:1, marginTop: 2}}
+        onClick={props.goToProductPage}>
 
         <CardMedia
           component="img"

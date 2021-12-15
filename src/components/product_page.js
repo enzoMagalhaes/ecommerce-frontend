@@ -44,9 +44,6 @@ export default function ProductPage(){
 
   const [Quantity,setQuantity] = useState(1)
 
-  const onQuantityChange = (e) => {
-    setQuantity(e.target.value)
-  }
   const incrementQuantity = () => {
     setQuantity(Quantity+1)
   }
@@ -139,6 +136,26 @@ export default function ProductPage(){
 
 
 
+  const get_discount = () => {
+
+    if (Product.is_promotion){
+
+      return (
+
+          <Typography variant="subtitle1" sx={{marginTop: 3 ,color: '#fc9f12'}}>
+                      
+              {Product.discount_rate * 100}% de desconto
+
+          </Typography>
+
+
+      )
+
+
+    }
+
+  }
+
 
 
 
@@ -160,7 +177,7 @@ export default function ProductPage(){
           <Paper elevation={3}>
             <Grid container>
               
-              <Grid item xs={4}>
+              <Grid item xs={5}>
 
                <Box
                   component="img"
@@ -175,7 +192,7 @@ export default function ProductPage(){
               </Grid>
                 
 
-              <Grid item xs={8}>
+              <Grid item xs={7}>
 
                 <Grid container sx={{alignItems:"center"}}>
                   
@@ -191,12 +208,12 @@ export default function ProductPage(){
 
 
                   <Grid item xs={2}>
-                    <Rating sx={{marginTop: 3}} value={Product.rating} readOnly />
+                    <Rating sx={{marginTop: 3}} value={Product.rating || 0} readOnly />
                   </Grid>           
 
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
 
-                    <Typography variant="subtitle1" sx={{marginTop: 3}}>
+                    <Typography variant="subtitle1" sx={{marginTop: 3,marginLeft:2}}>
                       
                     {Product.amount_sold} vendidos
 
@@ -206,15 +223,11 @@ export default function ProductPage(){
 
                   <Grid item xs={2}>
 
-                    <Typography variant="subtitle1" sx={{marginTop: 3 ,color: '#fc9f12'}}>
-                      
-                    {Product.discount_rate * 100}% de desconto
-
-                    </Typography>
-
+                    {get_discount()}
+                    
                   </Grid>
 
-                  <Grid item xs={6}/>
+                  <Grid item xs={5}/>
 
                   <Grid item xs={6}>
 

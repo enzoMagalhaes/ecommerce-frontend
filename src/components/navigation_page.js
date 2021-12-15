@@ -12,8 +12,21 @@ import CircularProgress from '@mui/material/CircularProgress';
 import TopBar from './components/topbar.js'
 import Product from './components/product.js'
 
+import {useNavigate} from 'react-router-dom'
+
 export default function NavigationPage(){
-  
+  const navigate = useNavigate()
+
+const goToProductPage = (e) => {
+
+  const id = e.currentTarget.id
+  navigate('/product/' + id)
+
+}
+
+
+
+
   const [Products,setProducts] = useState({loading: true,products: null})
 
   ////////////////////////////////////////////
@@ -107,7 +120,7 @@ export default function NavigationPage(){
       // need to return the map directly
       if (Products.products.length != 0){
         return Products.products.map(product =>
-                    <Product description={product.description} price={product.price} amount_sold={product.amount_sold} 
+                    <Product goToProductPage={goToProductPage} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
                 )
       }else {
