@@ -18,6 +18,7 @@ function App(){
         <Routes>
 
             <Route path="/navigate" element={<NavPage/>} />
+            <Route path="/navigate/:search_term" element={<NavPage/>} />
             <Route path="/product/:product_id" element={<ProductPage/>} />
             <Route path="/" element={<IndexPage/>}/>
             

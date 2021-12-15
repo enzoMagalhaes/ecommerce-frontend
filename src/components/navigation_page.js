@@ -1,6 +1,6 @@
 
 
-import React , {useState,useEffect} from 'react'
+import React , {useState,useEffect,useRef} from 'react'
 import Filters from './components/filters.js'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,19 +13,25 @@ import TopBar from './components/topbar.js'
 import Product from './components/product.js'
 
 import {useNavigate} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 
 export default function NavigationPage(){
+  const firstUpdate = useRef(true);
+  const {search_term} = useParams()
+
+  const cancelSubmit = (e) => {
+    e.preventDefault()
+  }
+
+
   const navigate = useNavigate()
 
-const goToProductPage = (e) => {
+  const goToProductPage = (e) => {
 
-  const id = e.currentTarget.id
-  navigate('/product/' + id)
+    const id = e.currentTarget.id
+    navigate('/product/' + id)
 
-}
-
-
-
+  }
 
   const [Products,setProducts] = useState({loading: true,products: null})
 
@@ -33,10 +39,9 @@ const goToProductPage = (e) => {
 
   // SEARCH ENGINE
 
-  const [Search,setSearch] = useState("")
+  const [Search,setSearch] = useState(search_term || "")
   
   const onSearchChange = (e) => {
-    console.log(e.target.id)
     setSearch(e.target.value)
   }
 
@@ -51,6 +56,7 @@ const goToProductPage = (e) => {
   }
 
   useEffect(() => {
+    console.log("search: " + Search)
     getProductsSearch()
   }, [Search])
 
@@ -106,8 +112,12 @@ const goToProductPage = (e) => {
   }
 
   useEffect(() => {
-
-    getProductsFilter()
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }else{
+      getProductsFilter()
+    }
   }, [celulares,eletronicos,relogios,calcados,bolsas,roupas,nacional,importado,novo,usado,promocao,frete_gratis,min_price,max_price,rating])
   /////////////////////////////////////////////////////////
 
@@ -120,7 +130,7 @@ const goToProductPage = (e) => {
       // need to return the map directly
       if (Products.products.length != 0){
         return Products.products.map(product =>
-                    <Product goToProductPage={goToProductPage} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
+                    <Product key={product.id} goToProductPage={goToProductPage} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
                 )
       }else {
@@ -139,7 +149,7 @@ const goToProductPage = (e) => {
       <Grid container spacing={2}>
 
         <Grid xs={12}>
-          <TopBar searchfunc={onSearchChange}/>
+          <TopBar submitfunc={cancelSubmit} search_term={Search} searchfunc={onSearchChange}/>
         </Grid>
 
         <Grid item xs={3}>

@@ -48,7 +48,9 @@ export default function ProductPage(){
     setQuantity(Quantity+1)
   }
   const decrementQuantity = () => {
-    setQuantity(Quantity-1)
+    if(Quantity > 1){
+      setQuantity(Quantity-1)
+    }
   }
 
 

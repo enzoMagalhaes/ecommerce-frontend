@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 
 import Popper from './popper.js'
 import Grid from '@mui/material/Grid';
+import {useNavigate} from 'react-router-dom'
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -82,6 +83,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar(props) {
 
+  const navigate = useNavigate()
+  const goToIndex = () => {
+    navigate('/')
+  }
+
   const classes = useStyles()
   const mobileMenuId = 'primary-search-account-menu-mobile';
   return (
@@ -91,7 +97,7 @@ export default function PrimarySearchAppBar(props) {
           <Grid container spacing={0} alignItems="center" justify="center">
 
               <Grid item xs={1}>
-                  <img src="/store-logo.png" alt="logo" className={classes.logo}/>
+                  <img src="/store-logo.png" className={classes.logo} onClick={goToIndex}/>
               </Grid>
 
               <Grid item xs={1}>
@@ -103,11 +109,19 @@ export default function PrimarySearchAppBar(props) {
                     <SearchIconWrapper>
                       <SearchIcon />
                     </SearchIconWrapper>
-                    <StyledInputBase
-                      onChange={props.searchfunc}
-                      placeholder="Pesquisar"
-                      inputProps={{ 'aria-label': 'search' }}
-                    />
+
+                    <form onSubmit={props.submitfunc} autocomplete="off">
+                      
+                      <StyledInputBase
+                        onChange={props.searchfunc}
+                        placeholder="Pesquisar"
+                        name="input"
+                        value={props.search_term}
+                        inputProps={{ 'aria-label': 'search' }}
+                      />
+
+                    </form>
+
                   </Search>
               </Grid>
 

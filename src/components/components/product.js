@@ -41,7 +41,7 @@ export default function ProductDisplay(props) {
   }
 
   return (
-    <Grid key={props.id} id={props.id} item component={Card} xs={2.4} sx={{maxWidth: 200, marginLeft:1, marginTop: 2}}
+    <Grid id={props.id} item component={Card} xs={2.4} sx={{maxWidth: 200, marginLeft:1, marginTop: 2}}
         onClick={props.goToProductPage}>
 
         <CardMedia
