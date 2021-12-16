@@ -6,11 +6,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import ImageSlider from './components/slideshow.js'
 
 
 import TopBar from './components/topbar.js'
 import Product from './components/product.js'
+import Offercard from './components/offer_card.js'
 
 import {useNavigate} from 'react-router-dom'
 
@@ -32,9 +33,12 @@ export default function NavigationPage(){
           <TopBar submitfunc={goToNavigate}/>
         </Grid>
 
-        <Grid item xs={3}>
+        <ImageSlider/>
 
+        <Grid xs={5}>
+          <Offercard/>
         </Grid>
+
 
       </Grid>
     </Box>
