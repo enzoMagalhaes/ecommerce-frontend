@@ -69,7 +69,7 @@ export default function SwipeableTextMobileStepper() {
   };
 
   return (
-    <Box sx={{ maxWidth: "100%", marginLeft: 0}}>
+    <Box sx={{ maxWidth: "100%", marginLeft: 0,marginBottom: 3}}>
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
         index={activeStep}

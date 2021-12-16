@@ -1,17 +1,13 @@
 
 
-import React , {useState,useEffect} from 'react'
-import Filters from './components/filters.js'
+import React from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
-import CircularProgress from '@mui/material/CircularProgress';
-import ImageSlider from './components/slideshow.js'
-
+import Typography from '@mui/material/Typography';
 
 import TopBar from './components/topbar.js'
-import Product from './components/product.js'
 import Offercard from './components/offer_card.js'
+import ImageSlider from './components/slideshow.js'
 
 import {useNavigate} from 'react-router-dom'
 
@@ -35,11 +31,43 @@ export default function NavigationPage(){
 
         <ImageSlider/>
 
-        <Grid xs={5}>
-          <Offercard/>
+        <Grid xs={12}>
+
+          <Typography sx={{ textAlign:"center", fontSize:20}} gutterBottom>
+
+            Ofertas para todos os bolsos
+          </Typography>
+
         </Grid>
 
 
+
+
+        <Grid xs={1}/>
+
+        <Grid xs={2.425}>
+          <Offercard img="/card1.webp"/>
+        </Grid>
+
+        <Grid xs={0.1}/>
+
+        <Grid xs={2.425}>
+          <Offercard img="/card2.webp"/>
+        </Grid>
+
+        <Grid xs={0.1}/>
+
+        <Grid xs={2.425}>
+          <Offercard img="/card3.webp"/>
+        </Grid>
+
+        <Grid xs={0.1}/>
+
+        <Grid xs={2.425}>
+          <Offercard img="/card4.webp"/>
+        </Grid>
+
+        <Grid xs={1}/>
       </Grid>
     </Box>
 
