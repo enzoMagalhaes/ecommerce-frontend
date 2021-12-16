@@ -21,7 +21,7 @@ function App(){
             <Route path="/navigate/:search_term" element={<NavPage/>} />
             <Route path="/product/:product_id" element={<ProductPage/>} />
             <Route path="/" element={<IndexPage/>}/>
-            
+            <Route path="*" element={<ErrorPage/>}/>
 
 
         </Routes>

@@ -33,15 +33,12 @@ export default function NavigationPage(){
 
         <Grid xs={12}>
 
-          <Typography sx={{ textAlign:"center", fontSize:20}} gutterBottom>
+          <Typography sx={{ textAlign:"center", fontSize:20,color:"#545454"}} gutterBottom>
 
             Ofertas para todos os bolsos
           </Typography>
 
         </Grid>
-
-
-
 
         <Grid xs={1}/>
 

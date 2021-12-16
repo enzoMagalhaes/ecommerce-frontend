@@ -18,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import {useParams} from 'react-router-dom'
 
@@ -297,6 +298,7 @@ export default function ProductPage(){
 
                     }}
                     >
+                    <AddShoppingCartIcon/>
                       Adicionar ao Carrinho
                     </Button>
 
