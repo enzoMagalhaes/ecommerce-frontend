@@ -1,6 +1,6 @@
 
 
-import React from 'react'
+import React, {useEffect} from 'react'
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 
 
@@ -10,6 +10,11 @@ import IndexPage from './components/index_page.js'
 import ErrorPage from './components/error_page.js'
 
 function App(){
+
+  useEffect(() => {
+    document.title = "Loja online!"
+  }, [])
+
 
   return (
 
