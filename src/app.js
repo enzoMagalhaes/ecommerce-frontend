@@ -8,6 +8,8 @@ import NavPage from './components/navigation_page.js'
 import ProductPage from './components/product_page.js'
 import IndexPage from './components/index_page.js'
 import ErrorPage from './components/error_page.js'
+import RegisterPage from './components/register_page.js'
+import LoginPage from './components/login_page.js'
 
 function App(){
 
@@ -26,6 +28,8 @@ function App(){
             <Route path="/navigate/:search_term" element={<NavPage/>} />
             <Route path="/product/:product_id" element={<ProductPage/>} />
             <Route path="/" element={<IndexPage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/register" element={<RegisterPage/>}/>            
             <Route path="*" element={<ErrorPage/>}/>
 
 
