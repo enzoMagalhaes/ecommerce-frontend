@@ -9,18 +9,15 @@ import TextField from '@mui/material/TextField';
 import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
 
+import {useNavigate} from 'react-router-dom'
 
 export default function Login(){
 
-  // useEffect( () =>  {
-    
+  const navigate = useNavigate()
 
-  // }, []) 
-
-
-    // fields = ('email','user_name','password') (REGISTER)
-// email password (LOGIN)
-
+  const goToIndex = () => {
+    navigate('/')
+  }
 
   const [Success,setSuccess] = useState(null)
 
@@ -49,40 +46,32 @@ export default function Login(){
     fetch(apiUrl,requestOptions)
       .then(response => {
         if(response.ok){
-          setSuccess(true)
-
+          return response.json()
         }else{
           setSuccess(false)
+          return Promise.reject()
         }
 
+      })
+      .then(response_data => {
+        localStorage.setItem('access_token',response_data.access)
+        localStorage.setItem('refresh_token',response_data.refresh)
+        goToIndex()
       })
 
   }
 
 
   const render_form_status = () => {
+    if (Success == false){
 
-    if (Success === true){
+          <Typography variant="subtitle1" sx={{color:'red'}}>
+              Something went wrong.
+          </Typography>
 
-      return (
-
-        <Typography variant="subtitle1" sx={{color:'green'}}>
-            Login Successfull
-        </Typography>
-
-
-
-      )
-
-    }else if (Success === false){
-
-        <Typography variant="subtitle1" sx={{color:'red'}}>
-            Something went wrong.
-        </Typography>
+      }
 
     }
-
-  }
 
 
 
@@ -91,66 +80,53 @@ export default function Login(){
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <Grid xs={12}>
-          <TopBar/>
-        </Grid>
+        <Grid item xs={3} />
 
 
-
-        <Grid item xs={1} />
-
-
-        <Grid item xs={10}>
-          <Paper elevation={3}>
+        <Grid item xs={6}>
+          <Paper elevation={3} sx={{marginTop:15}}>
             <Grid container>
               
               <Grid item xs={1}/>
 
-              <Grid item xs={11}>
+              <form onSubmit={(e) =>  login(e)}>
 
-                {render_form_status()}
+                <Grid item xs={11} sx={{marginTop:2}}>
+                  {render_form_status()}
+                  
+                  <TextField id="email" variant="outlined" label="Email" size="small" style = {{width: 400,height:60}}/>
 
+                </Grid>
 
-                <form onSubmit={(e) =>  login(e)}>
+                <Grid item xs={1}/>
 
-                  <Typography variant="subtitle1" >
-                    Email:
-                  </Typography>
-                  <TextField id="email" variant="outlined" size="small" style = {{width: 400,height:60}}/>
+                <Grid item xs={10}>
 
+                  <TextField id="password" variant="outlined" label="Senha" type="password" size="small" style = {{width: 400,height:60}}/>
 
-                  <Typography variant="subtitle1" >
-                    senha:
-                  </Typography>
-                  <TextField id="password" type='password' variant="outlined" size="small" style = {{width: 400,height:60}}/>
+                  <Button 
+                        variant="outlined"
+                        type="submit"
 
+                        sx={{
+                          ':hover': {
+                            borderColor: "#35d411",
+                            color: '#35d411',
+                          },
+                          borderColor: '#35d411',
+                          border: '1px solid',
+                          color: '#35d411',
+                          fontWeight: 'bold',
+                          fontSize: 12,
+                          width: "100%",
+                          marginBottom:10
+                        }}
+                      >
+                      Login
+                  </Button>
+                </Grid>
 
-
-                  <br/>
-
-                    <Button 
-                      variant="outlined"
-                      type="submit"
-
-                      sx={{
-                        ':hover': {
-                          borderColor: "#fc2112",
-                          color: '#fc2112',
-                        },
-                        borderColor: '#fc2112',
-                        border: '1px solid',
-                        color: '#fc2112',
-                        fontWeight: 'bold',
-                        fontSize: 12,
-                        marginBottom:10
-                      }}
-                    >
-                    Login
-                    </Button>
-
-                </form>
-
-              </Grid>
+              </form>
 
 
 
@@ -159,7 +135,7 @@ export default function Login(){
           </Paper>
         </Grid>
 
-        <Grid item xs={1} />
+        <Grid item xs={3} />
 
 
 

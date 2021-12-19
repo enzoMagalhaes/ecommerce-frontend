@@ -22,25 +22,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 import {useParams} from 'react-router-dom'
 
-
-const useStyles = makeStyles((theme) => ({
-  addcart: {
-    borderColor: 'white',
-    border: '1px solid',
-    color: 'white',
-    marginRight: 5,
-    fontWeight: 'bold'
-  },
-
-
-  buynow: {
-    backgroundColor: "orange",
-    fontWeight: 'bold'
-  },
-}))
-
-
-
 export default function ProductPage(){
 
   const [Quantity,setQuantity] = useState(1)

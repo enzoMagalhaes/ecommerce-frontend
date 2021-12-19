@@ -101,75 +101,68 @@ export default function Register(){
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <Grid xs={12}>
-          <TopBar/>
-        </Grid>
+        <Grid item xs={3} />
 
-
-
-        <Grid item xs={1} />
-
-
-        <Grid item xs={10}>
-          <Paper elevation={3}>
+        <Grid item xs={6}>
+          <Paper elevation={3} sx={{marginTop:15}}>
             <Grid container>
               
-              <Grid item xs={1}/>
+              <Grid item xs={2}/>
 
-              <Grid item xs={11}>
+              <form onSubmit={(e) => register_user(e)}>
 
-                {render_form_status()}
+                <Grid item xs={8} sx={{marginTop:2}}>
 
+                  {render_form_status()}
 
-                <form onSubmit={(e) => register_user(e)}>
+                    <TextField id="email" label="Email" variant="outlined" size="small" sx={{width: 400,height:60}}/>
 
-                  <Typography variant="subtitle1" >
-                    Email:
-                  </Typography>
-                  <TextField id="email" variant="outlined" size="small" style = {{width: 400,height:60}}/>
+                </Grid>
 
-                  <Typography variant="subtitle1" >
-                    usuario:
-                  </Typography>
-                  <TextField id="username" variant="outlined" size="small" style = {{width: 400,height:60}}/>
+                <Grid item xs={2}/>
+                <Grid item xs={2}/>
 
-
-                  <Typography variant="subtitle1" >
-                    senha:
-                  </Typography>
-                  <TextField id="password" type='password' variant="outlined" size="small" style = {{width: 400,height:60}}/>
+                <Grid item xs={8}>
+                  <TextField id="username" label="Usuario" variant="outlined" size="small" sx={{width: 400,height:60}}/>
+                </Grid>
+                <Grid item xs={2}/>
+                <Grid item xs={2}/>
 
 
-                  <Typography variant="subtitle1" >
-                    confirmar senha:
-                  </Typography>
-                  <TextField id="confirm_password" type='password' variant="outlined" size="small" style = {{width: 400,height:60}}/>
+                <Grid item xs={8}>
+                  <TextField id="password" label="Senha" type='password' variant="outlined" size="small" sx={{width: 400,height:60}}/>
+                </Grid>
+                <Grid item xs={2}/>
+                <Grid item xs={2}/>
 
-                  <br/>
+                <Grid item xs={8}>
+                  <TextField id="confirm_password" label="Confirmar senha" type='password' variant="outlined" size="small" sx={{width: 400,height:60}}/>
 
-                    <Button 
-                      variant="outlined"
-                      type="submit"
 
-                      sx={{
-                        ':hover': {
-                          borderColor: "#fc2112",
-                          color: '#fc2112',
-                        },
-                        borderColor: '#fc2112',
-                        border: '1px solid',
-                        color: '#fc2112',
-                        fontWeight: 'bold',
-                        fontSize: 12,
-                        marginBottom:10
-                      }}
-                    >
-                    Registrar
-                    </Button>
+                      <Button 
+                        variant="contained"
+                        type="submit"
 
-                </form>
+                        sx={{
+                          ':hover': {
+                            backgroundColor: "#fc2112",
+                            color: 'white',
+                          },
+                          backgroundColor: '#fc2112',
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: 12,
+                          width:"100%",
+                          marginBottom:4
+                        }}
+                      >
+                      Registrar
+                      </Button>
 
-              </Grid>
+
+                </Grid>
+                <Grid item xs={2}/>
+              </form>
 
 
 
@@ -178,7 +171,7 @@ export default function Register(){
           </Paper>
         </Grid>
 
-        <Grid item xs={1} />
+        <Grid item xs={3} />
 
 
 

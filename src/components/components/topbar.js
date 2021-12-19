@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+import React , {useState,useEffect} from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -81,12 +82,192 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function PrimarySearchAppBar(props) {
+export default function TopBar(props) {
 
   const navigate = useNavigate()
   const goToIndex = () => {
     navigate('/')
   }
+  const goToLogin = () => {
+    navigate('/login')
+  }
+  const goToRegister = () => {
+    navigate('/register')
+  }
+
+  const [Loggedin,setLoggedin] = useState(false)
+  const [Refresh,setRefresh] = useState(false)
+
+  const check_token = () => {
+    
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        }, 
+    };
+    const apiUrl = "http://127.0.0.1:8000/auth/check_token"
+    fetch(apiUrl,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if(data.auth_status == "OK"){
+          setLoggedin(true)
+        }else{
+          setLoggedin(false)
+        }
+      })
+
+    return Loggedin
+  }
+
+  const refresh_token = () => {
+
+    const refresh = localStorage.getItem('refresh_token') || null
+    var data = {refresh: refresh}
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    };
+
+    const apiUrl = "http://127.0.0.1:8000/auth/token/refresh"
+    fetch(apiUrl,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+
+        localStorage.setItem('access_token',data.access)
+        setRefresh(true)
+
+      })
+  }
+
+
+
+  const handle_token = () => {
+    const is_logged_in = check_token()
+    if(is_logged_in == false){
+      refresh_token()
+    }
+  }
+
+  useEffect( () =>  {
+    handle_token()
+  }, [Refresh]) 
+
+
+
+  const logout = () => {
+
+    const refresh = localStorage.getItem('refresh_token') || null
+    var data = {refresh_token: refresh}
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify(data)
+    };
+
+    const apiUrl = "http://127.0.0.1:8000/auth/logout"
+    fetch(apiUrl,requestOptions)
+      .then(response => {
+        if(response.ok){
+          setLoggedin(false)
+        }
+      })
+
+
+  }
+
+
+
+
+
+  const handle_loggedin_buttons = () => {
+
+    if(Loggedin==false){
+
+      return(
+        <>
+
+              <Grid item xs={1.25}>     
+                  <Button variant="outlined" className={classes.signin} disableRipple='true'
+                  onClick={goToLogin}
+                  sx={{
+                    ':hover': {
+                      borderColor: "white",
+                      color: 'white',
+                    },
+                  }}
+                  >
+                    Fazer Login
+                  </Button>
+              </Grid>
+
+
+              <Grid item className={classes.griditem} xs={1.5}> 
+                  
+                  <Button variant="contained"  className={classes.register} disableRipple='true'
+                  onClick={goToRegister}
+                  sx={{
+                    ':hover': {
+                      backgroundColor: "black",
+                      color: 'white',
+                    },
+                  }}
+                  >
+                    Cadastrar-se
+                  </Button>
+
+              </Grid>
+
+
+        </>
+      )
+
+
+    }else{
+
+      return(
+        <>
+
+              <Grid item xs={1.25}/>
+
+              <Grid item xs={1.5}>     
+                  <Button variant="contained"  className={classes.register} disableRipple='true'
+                  onClick={logout}
+                  sx={{
+                    ':hover': {
+                      backgroundColor: "black",
+                      color: 'white',
+                    },
+                  }}
+                  >
+                    deslogar
+                  </Button>
+
+              </Grid>
+
+
+
+        </>
+      )
+
+
+    }
+
+
+  }
+
+
+
+
 
   const classes = useStyles()
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -134,35 +315,7 @@ export default function PrimarySearchAppBar(props) {
               </Grid>
 
 
-              <Grid item xs={1.25}>     
-                  <Button variant="outlined" className={classes.signin} disableRipple='true'
-
-                  sx={{
-                    ':hover': {
-                      borderColor: "white",
-                      color: 'white',
-                    },
-                  }}
-                  >
-                    Fazer Login
-                  </Button>
-              </Grid>
-
-
-              <Grid item className={classes.griditem} xs={1.5}> 
-                  
-                  <Button variant="contained"  className={classes.register} disableRipple='true'
-                  sx={{
-                    ':hover': {
-                      backgroundColor: "black",
-                      color: 'white',
-                    },
-                  }}
-                  >
-                    Cadastrar-se
-                  </Button>
-
-              </Grid>
+              {handle_loggedin_buttons()}
 
           </Grid>
 
