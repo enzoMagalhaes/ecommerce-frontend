@@ -54,6 +54,8 @@ export default function Register(){
         body: JSON.stringify(data)
     };
 
+    console.log(requestOptions.body)
+
 
     const apiUrl = "http://127.0.0.1:8000/auth/register"
     fetch(apiUrl,requestOptions)

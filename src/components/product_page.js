@@ -11,6 +11,7 @@ import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
 
 import {makeStyles} from '@mui/styles'
+import {useNavigate} from 'react-router-dom'
 
 
 
@@ -23,6 +24,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import {useParams} from 'react-router-dom'
 
 export default function ProductPage(){
+  const navigate = useNavigate()
 
   const [Quantity,setQuantity] = useState(1)
 
@@ -45,7 +47,6 @@ export default function ProductPage(){
     fetch(apiUrl)
       .then(response => response.json())
       .then(product_data => {
-        console.log(product_data)
         setProduct(product_data)
       })
 
@@ -141,6 +142,56 @@ export default function ProductPage(){
   }
 
 
+  const addToCart = () => {
+
+    const data = {
+      product_id: parseInt(product_id)
+
+    }
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }, 
+        body: JSON.stringify(data)
+    };
+
+    console.log(requestOptions.body)
+
+
+    const apiUrl = "http://127.0.0.1:8000/user/addcart"
+    fetch(apiUrl,requestOptions)
+
+  }
+
+
+  const buyNow = () => {
+
+    const data = {product_id: parseInt(product_id)}
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        }, 
+        body: JSON.stringify(data)
+    };
+
+    const apiUrl = "http://127.0.0.1:8000/user/addcart"
+    fetch(apiUrl,requestOptions)
+      .then(response => {
+        if (response.ok){
+          console.log("ok")
+          navigate('/cart')
+        }
+      })    
+
+  }
 
 
   return (
@@ -278,6 +329,7 @@ export default function ProductPage(){
                       fontSize: 12
 
                     }}
+                    onClick={addToCart}
                     >
                     <AddShoppingCartIcon/>
                       Adicionar ao Carrinho
@@ -298,6 +350,7 @@ export default function ProductPage(){
                       },
                       backgroundColor: "#fc2112",
                     }}
+                    onClick={buyNow}
                     >
                       Comprar Agora
                     </Button>

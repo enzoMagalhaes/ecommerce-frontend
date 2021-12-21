@@ -10,7 +10,6 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 
 export default function ProductDisplay(props) {
   const handle_prices = () => {
-
     if (props.is_promotion){  
 
       let discounted_price = props.price*(1-props.discount_rate)

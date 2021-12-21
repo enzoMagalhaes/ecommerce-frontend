@@ -93,6 +93,9 @@ export default function TopBar(props) {
   }
   const goToRegister = () => {
     navigate('/register')
+  }  
+  const goToCart = () => {
+    navigate('/cart')
   }
 
   const [Loggedin,setLoggedin] = useState(false)
@@ -311,7 +314,7 @@ export default function TopBar(props) {
               </Grid>
 
               <Grid item xs={0.4}>
-                  <ShoppingCartIcon/>
+                  <ShoppingCartIcon onClick={goToCart}/>
               </Grid>
 
 

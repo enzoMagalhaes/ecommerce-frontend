@@ -56,7 +56,6 @@ export default function NavigationPage(){
   }
 
   useEffect(() => {
-    console.log("search: " + Search)
     getProductsSearch()
   }, [Search])
 

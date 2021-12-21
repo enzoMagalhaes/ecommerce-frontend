@@ -10,6 +10,8 @@ import IndexPage from './components/index_page.js'
 import ErrorPage from './components/error_page.js'
 import RegisterPage from './components/register_page.js'
 import LoginPage from './components/login_page.js'
+import CartPage from './components/cart_page.js'
+import CheckoutPage from './components/checkout_page.js'
 
 function App(){
 
@@ -30,6 +32,8 @@ function App(){
             <Route path="/" element={<IndexPage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>            
+            <Route path="/cart" element={<CartPage/>}/>            
+            <Route path="/checkout" element={<CheckoutPage/>}/>            
             <Route path="*" element={<ErrorPage/>}/>
 
 
