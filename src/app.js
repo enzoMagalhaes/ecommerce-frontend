@@ -12,6 +12,9 @@ import RegisterPage from './components/register_page.js'
 import LoginPage from './components/login_page.js'
 import CartPage from './components/cart_page.js'
 import CheckoutPage from './components/checkout_page.js'
+import HistoryPage from './components/history_page.js'
+import WishListPage from './components/wishlist_page.js'
+
 
 function App(){
 
@@ -33,9 +36,10 @@ function App(){
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>            
             <Route path="/cart" element={<CartPage/>}/>            
-            <Route path="/checkout" element={<CheckoutPage/>}/>            
+            <Route path="/checkout" element={<CheckoutPage/>}/>   
+            <Route path="/history" element={<HistoryPage/>}/>
+            <Route path="/wishlist" element={<WishListPage/>}/>         
             <Route path="*" element={<ErrorPage/>}/>
-
 
         </Routes>
 

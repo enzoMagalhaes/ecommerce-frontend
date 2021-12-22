@@ -18,6 +18,11 @@ export default function CartPage(){
   const goToCheckout= () => {
     navigate('/checkout')
   }
+  const goToNavigate = (e) => {
+    const search_term = e.target.input.value
+    navigate('/navigate/' + search_term)
+
+  }
 
   const [Products,setProducts] = useState({loading: true,products: null})
 
@@ -117,7 +122,7 @@ export default function CartPage(){
       <Grid container spacing={2}>
 
 
-        <TopBar/>
+        <TopBar submitfunc={goToNavigate}/>
 
 
         <Grid item xs={1}/>

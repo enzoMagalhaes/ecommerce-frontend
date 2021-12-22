@@ -6,6 +6,9 @@ import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import {makeStyles} from '@mui/styles'
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import Stack from '@mui/material/Stack';
+
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Button from '@mui/material/Button';
@@ -96,6 +99,14 @@ export default function TopBar(props) {
   }  
   const goToCart = () => {
     navigate('/cart')
+  }
+
+  const goToHistory = () => {
+    navigate('/history')
+  }  
+  
+  const goToWishList = () => {
+    navigate('/wishlist')
   }
 
   const [Loggedin,setLoggedin] = useState(false)
@@ -198,8 +209,11 @@ export default function TopBar(props) {
 
       return(
         <>
-
-              <Grid item xs={1.25}>     
+              <Grid item xs={2.5}/>
+              <Grid item xs={3.5}>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <FavoriteBorderOutlinedIcon onClick={goToWishList} />
+                  <ShoppingCartIcon onClick={goToCart}/>
                   <Button variant="outlined" className={classes.signin} disableRipple='true'
                   onClick={goToLogin}
                   sx={{
@@ -211,11 +225,6 @@ export default function TopBar(props) {
                   >
                     Fazer Login
                   </Button>
-              </Grid>
-
-
-              <Grid item className={classes.griditem} xs={1.5}> 
-                  
                   <Button variant="contained"  className={classes.register} disableRipple='true'
                   onClick={goToRegister}
                   sx={{
@@ -227,8 +236,13 @@ export default function TopBar(props) {
                   >
                     Cadastrar-se
                   </Button>
-
+                </Stack>
               </Grid>
+
+
+
+                  
+
 
 
         </>
@@ -239,10 +253,22 @@ export default function TopBar(props) {
 
       return(
         <>
-
-              <Grid item xs={1.25}/>
-
-              <Grid item xs={1.5}>     
+              <Grid item xs={3}/>
+              <Grid item xs={3}>
+                <Stack direction="row" alignItems="center" spacing={2}>
+                  <FavoriteBorderOutlinedIcon/>
+                  <ShoppingCartIcon onClick={goToCart}/>
+                  <Button variant="outlined" className={classes.signin} disableRipple='true'
+                  onClick={goToHistory}
+                  sx={{
+                    ':hover': {
+                      borderColor: "white",
+                      color: 'white',
+                    },
+                  }}
+                  >
+                    Perfil
+                  </Button>              
                   <Button variant="contained"  className={classes.register} disableRipple='true'
                   onClick={logout}
                   sx={{
@@ -252,13 +278,10 @@ export default function TopBar(props) {
                     },
                   }}
                   >
-                    deslogar
+                    Sair da conta
                   </Button>
-
+                </Stack>
               </Grid>
-
-
-
         </>
       )
 
@@ -308,16 +331,7 @@ export default function TopBar(props) {
 
                   </Search>
               </Grid>
-
-              <Grid item xs={2.85}>
-                 
-              </Grid>
-
-              <Grid item xs={0.4}>
-                  <ShoppingCartIcon onClick={goToCart}/>
-              </Grid>
-
-
+            
               {handle_loggedin_buttons()}
 
           </Grid>
