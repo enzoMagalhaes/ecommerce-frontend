@@ -9,8 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import TopBar from './components/topbar.js'
 import Product from './components/cart_product.js'
-
-
+import SendRequest from '../api_utils.js'
 import {useNavigate} from 'react-router-dom'
 
 export default function NavigationPage(){
@@ -26,16 +25,9 @@ export default function NavigationPage(){
   const baseurl = 'http://127.0.0.1:8000' //fix this later
 
   const getUserWishlist = () => {
-    const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-    };
-    const apiUrl = "http://127.0.0.1:8000/user/wishlist"
-    fetch(apiUrl,requestOptions)
+
+    const apiUrl = "/user/wishlist"
+    SendRequest(apiUrl,"GET",null,true)
       .then(response => response.json())
       .then(data => {
         setProducts({loading:false,products:data})
@@ -48,27 +40,13 @@ export default function NavigationPage(){
   const delete_function = (e) => {
     const product_card = e.target.parentElement.parentElement.parentElement
     const id = product_card.id
-    const data = {
+    const data = {product_id: id}
 
-      product_id: id
-
-    }
-
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        },
-        body: JSON.stringify(data) 
-    };
-    const apiUrl = "http://127.0.0.1:8000/user/delwish"
-    fetch(apiUrl,requestOptions)
+    const apiUrl = "/user/delwish"
+    SendRequest(apiUrl,"POST",data,true)
       .then(response => {
         if (response.ok){
           product_card.remove()
-
         }
       })
 

@@ -12,6 +12,7 @@ import TopBar from './components/topbar.js'
 import CircularProgress from '@mui/material/CircularProgress';
 
 import {useNavigate} from 'react-router-dom'
+import SendRequest from '../api_utils.js'
 
 export default function CheckoutPage(){
 
@@ -68,24 +69,10 @@ export default function CheckoutPage(){
       CVV:CVV,
     }
 
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-        body: JSON.stringify(data)
-    };
 
+    const apiUrl = "/user/make_transaction"
+    SendRequest(apiUrl,"POST",data,true)
 
-    const apiUrl = "http://127.0.0.1:8000/user/make_transaction"
-    fetch(apiUrl,requestOptions)
-      .then(response => {
-        if (response.ok){
-          console.log('ok')
-        }
-      })
 
   }
 
@@ -96,16 +83,8 @@ export default function CheckoutPage(){
 
   const getCartProducts = () => {
     
-    const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-    };
-    const apiUrl = "http://127.0.0.1:8000/user/cart"
-    fetch(apiUrl,requestOptions)
+    const apiUrl = "/user/cart"
+    SendRequest(apiUrl,"GET",null,true)
       .then(response => response.json())
       .then(data => {
         setProducts({loading:false,products:data})

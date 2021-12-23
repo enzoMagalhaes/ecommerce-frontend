@@ -10,6 +10,7 @@ import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
 
 import {useNavigate} from 'react-router-dom'
+import SendRequest from '../api_utils.js'
 
 export default function Login(){
 
@@ -32,18 +33,10 @@ export default function Login(){
     const data = {
       email:email,
       password: password
-
     }
 
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    };
-
-
-    const apiUrl = "http://127.0.0.1:8000/auth/token"
-    fetch(apiUrl,requestOptions)
+    const apiUrl = "/auth/token"
+    SendRequest(apiUrl,"POST",data,false)
       .then(response => {
         if(response.ok){
           return response.json()

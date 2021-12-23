@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
+import SendRequest from '../api_utils.js'
 
 
 export default function Register(){
@@ -48,21 +49,12 @@ export default function Register(){
 
     }
 
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    };
 
-    console.log(requestOptions.body)
-
-
-    const apiUrl = "http://127.0.0.1:8000/auth/register"
-    fetch(apiUrl,requestOptions)
+    const apiUrl = "/auth/register"
+    SendRequest(apiUrl,"POST",data,false)
       .then(response => {
         if(response.ok){
           setSuccess(true)
-
         }else{
           setSuccess(false)
         }

@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import {makeStyles} from '@mui/styles'
 import {useNavigate} from 'react-router-dom'
 
+import SendRequest from '../api_utils.js'
 
 
 import IconButton from '@mui/material/IconButton';
@@ -48,8 +49,8 @@ export default function ProductPage(){
   const [Product,setProduct] = useState({})
 
   useEffect( () =>  {
-    const apiUrl = 'http://127.0.0.1:8000/' + product_id
-    fetch(apiUrl)
+    const apiUrl = '/' + product_id
+    SendRequest(apiUrl,"GET",null,false)
       .then(response => response.json())
       .then(product_data => {
         setProduct(product_data)
@@ -177,21 +178,10 @@ export default function ProductPage(){
 
     const data = {product_id: parseInt(product_id)}
 
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-        body: JSON.stringify(data)
-    };
-
-    const apiUrl = "http://127.0.0.1:8000/user/addcart"
-    fetch(apiUrl,requestOptions)
+    const apiUrl = "/user/addcart"
+    SendRequest(apiUrl,"POST",data,true)
       .then(response => {
         if (response.ok){
-          console.log("ok")
           navigate('/cart')
         }
       })    

@@ -7,10 +7,9 @@ import Grid from '@mui/material/Grid';
 import Pagination from '@mui/material/Pagination';
 import CircularProgress from '@mui/material/CircularProgress';
 
-
-
 import TopBar from './components/topbar.js'
 import Product from './components/product.js'
+import SendRequest from '../api_utils.js'
 
 import {useNavigate} from 'react-router-dom'
 import {useParams} from 'react-router-dom'
@@ -47,8 +46,8 @@ export default function NavigationPage(){
 
   const getProductsSearch = () => {
     setProducts({loading:true})
-    const apiUrl = 'http://127.0.0.1:8000/search?search=' + Search
-    fetch(apiUrl)
+    const apiUrl = '/search?search=' + Search
+    SendRequest(apiUrl,"GET",null,false)
       .then(response => response.json())
       .then(products => {
         setProducts({loading:false,products:products})
@@ -87,7 +86,7 @@ export default function NavigationPage(){
   const getProductsFilter = () => {
     setProducts({loading:true})
 
-    const apiUrl = 'http://127.0.0.1:8000/filter?celulares=' + celulares + 
+    const apiUrl = '/filter?celulares=' + celulares + 
           '&eletronicos=' + eletronicos +
           '&relogios=' + relogios +
           '&calcados=' + calcados +
@@ -103,7 +102,7 @@ export default function NavigationPage(){
           '&max_price=' + max_price +
           '&rating=' + rating;
 
-    fetch(apiUrl)
+    SendRequest(apiUrl,"GET",null,false)
       .then(response => response.json())
       .then(products => {
         setProducts({loading:false,products:products})

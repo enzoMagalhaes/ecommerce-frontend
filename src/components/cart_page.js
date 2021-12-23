@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import TopBar from './components/topbar.js'
 import Product from './components/cart_product.js'
 import {useNavigate} from 'react-router-dom'
+import SendRequest from '../api_utils.js'
 
 export default function CartPage(){
   const navigate = useNavigate()
@@ -29,17 +30,9 @@ export default function CartPage(){
   const baseurl = 'http://127.0.0.1:8000' //fix this later
 
   const getCartProducts = () => {
-    
-    const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-    };
-    const apiUrl = "http://127.0.0.1:8000/user/cart"
-    fetch(apiUrl,requestOptions)
+
+    const apiUrl = "/user/cart"
+    SendRequest(apiUrl,"GET",null,true)
       .then(response => response.json())
       .then(data => {
         setProducts({loading:false,products:data})
@@ -97,27 +90,12 @@ export default function CartPage(){
     const product_card = e.target.parentElement.parentElement.parentElement
     const id = product_card.id
     console.log(id)
-    const data = {
+    const data = {product_id: id}
 
-      product_id: id
-
-    }
-
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        },
-        body: JSON.stringify(data) 
-    };
-    const apiUrl = "http://127.0.0.1:8000/user/delcart"
-    fetch(apiUrl,requestOptions)
+    const apiUrl = "/user/delcart"
+    SendRequest(apiUrl,"POST",data,true)
       .then(response => {
-
         if (response.ok){
-          console.log("ok")
           product_card.remove()
 
         }

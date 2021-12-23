@@ -9,6 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import TopBar from './components/topbar.js'
 import Product from './components/cart_product.js'
+import SendRequest from '../api_utils.js'
 
 
 import {useNavigate} from 'react-router-dom'
@@ -26,16 +27,9 @@ export default function NavigationPage(){
   const baseurl = 'http://127.0.0.1:8000' //fix this later
 
   const getUserHistory = () => {
-    const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-    };
-    const apiUrl = "http://127.0.0.1:8000/user/history"
-    fetch(apiUrl,requestOptions)
+
+    const apiUrl = "/user/history"
+    SendRequest(apiUrl,"GET",null,true)
       .then(response => response.json())
       .then(data => {
         setProducts({loading:false,products:data})

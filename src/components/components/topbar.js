@@ -17,6 +17,8 @@ import Popper from './popper.js'
 import Grid from '@mui/material/Grid';
 import {useNavigate} from 'react-router-dom'
 
+import SendRequest from '../../api_utils.js'
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -114,16 +116,7 @@ export default function TopBar(props) {
 
   const check_token = () => {
     
-    const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-    };
-    const apiUrl = "http://127.0.0.1:8000/auth/check_token"
-    fetch(apiUrl,requestOptions)
+    SendRequest("/auth/check_token","GET",null,true)
       .then(response => {
         if(response.ok){
           setLoggedin(true)
@@ -138,17 +131,9 @@ export default function TopBar(props) {
     const refresh = localStorage.getItem('refresh_token') || null
     var data = {refresh: refresh}
 
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    };
-
-    const apiUrl = "http://127.0.0.1:8000/auth/token/refresh"
-    fetch(apiUrl,requestOptions)
+    SendRequest("/auth/token/refresh","POST",data,true)
       .then(response => response.json())
       .then(data => {
-
         localStorage.setItem('access_token',data.access)
         setRefresh(true)
 
@@ -159,7 +144,6 @@ export default function TopBar(props) {
 
   const handle_token = () => {
     check_token()
-
     if(Loggedin == false){
       refresh_token()
     }
@@ -176,18 +160,7 @@ export default function TopBar(props) {
     const refresh = localStorage.getItem('refresh_token') || null
     var data = {refresh_token: refresh}
 
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        },
-        body: JSON.stringify(data)
-    };
-
-    const apiUrl = "http://127.0.0.1:8000/auth/logout"
-    fetch(apiUrl,requestOptions)
+    SendRequest("/auth/logout","POST",data,true)
       .then(response => {
         if(response.ok){
           setLoggedin(false)
@@ -202,24 +175,16 @@ export default function TopBar(props) {
 
   const getCounts = () => {
 
-    const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        }, 
-    };
-    var apiUrl = "http://127.0.0.1:8000/user/wishlist"
-    fetch(apiUrl,requestOptions)
+    var apiUrl = "/user/wishlist"
+    SendRequest(apiUrl,"GET",null,true)
       .then(response => response.json())
       .then(data => {
         var count = data.length
         setWishlistCount(count)
       })
 
-    apiUrl = "http://127.0.0.1:8000/user/cart"
-    fetch(apiUrl,requestOptions)
+    apiUrl = "/user/cart"
+    SendRequest(apiUrl,"GET",null,true)
       .then(response => response.json())
       .then(data => {
         var count = data.length
