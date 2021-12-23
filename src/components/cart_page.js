@@ -93,6 +93,38 @@ export default function CartPage(){
   }, [])
 
 
+  const delete_function = (e) => {
+    const product_card = e.target.parentElement.parentElement.parentElement
+    const id = product_card.id
+    console.log(id)
+    const data = {
+
+      product_id: id
+
+    }
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify(data) 
+    };
+    const apiUrl = "http://127.0.0.1:8000/user/delcart"
+    fetch(apiUrl,requestOptions)
+      .then(response => {
+
+        if (response.ok){
+          console.log("ok")
+          product_card.remove()
+
+        }
+      })
+
+
+  }
 
 
   const render_products = () => {
@@ -103,7 +135,7 @@ export default function CartPage(){
       // need to return the map directly
       if (Products.products.length != 0){
         return Products.products.map(product =>
-                    <Product key={product.id} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
+                    <Product deletefunc={delete_function} key={product.id} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={baseurl+product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
                 )
       }else {

@@ -11,8 +11,19 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import TopBar from './components/topbar.js'
 import CircularProgress from '@mui/material/CircularProgress';
 
+import {useNavigate} from 'react-router-dom'
 
 export default function CheckoutPage(){
+
+  const navigate = useNavigate()
+
+  const goToNavigate = (e) => {
+    const search_term = e.target.input.value
+    navigate('/navigate/' + search_term)
+
+  }
+
+
 
   const [Nome,setNome] = useState("")
   const [Sobrenome,setSobrenome] = useState("")
@@ -150,7 +161,7 @@ export default function CheckoutPage(){
       <Grid container spacing={2}>
 
 
-        <TopBar/>
+        <TopBar submitfunc={goToNavigate}/>
 
 
         <Grid item xs={1}/>

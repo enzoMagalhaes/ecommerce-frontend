@@ -25,7 +25,7 @@ export default function NavigationPage(){
   const [Products,setProducts] = useState({loading: true,products: null})
   const baseurl = 'http://127.0.0.1:8000' //fix this later
 
-  const getUserHistory = () => {
+  const getUserWishlist = () => {
     const requestOptions = {
         method: 'GET',
         headers: {
@@ -44,6 +44,38 @@ export default function NavigationPage(){
 
   }
 
+
+  const delete_function = (e) => {
+    const product_card = e.target.parentElement.parentElement.parentElement
+    const id = product_card.id
+    const data = {
+
+      product_id: id
+
+    }
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify(data) 
+    };
+    const apiUrl = "http://127.0.0.1:8000/user/delwish"
+    fetch(apiUrl,requestOptions)
+      .then(response => {
+        if (response.ok){
+          product_card.remove()
+
+        }
+      })
+
+
+  }
+
+
   const render_products = () => {
     if(Products.loading){
       return <CircularProgress sx={{ color: '#fc2112', marginLeft: 10,marginTop:10}}/>
@@ -52,11 +84,11 @@ export default function NavigationPage(){
       // need to return the map directly
       if (Products.products.length != 0){
         return Products.products.map(product =>
-                    <Product key={product.id} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
+                    <Product key={product.id} deletefunc={delete_function} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={baseurl+product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
                 )
       }else {
-        return <p style={{marginLeft: 10}}> Ainda nao tem nenhum produto no Historico!</p>
+        return <p style={{marginLeft: 10}}> Ainda nao tem nenhum produto na Lista de Desejos!</p>
 
       }
 
@@ -65,7 +97,7 @@ export default function NavigationPage(){
   }
 
   useEffect(() => {
-    getUserHistory()
+    getUserWishlist()
   }, [])
 
 

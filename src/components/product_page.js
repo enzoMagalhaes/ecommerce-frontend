@@ -25,7 +25,12 @@ import {useParams} from 'react-router-dom'
 
 export default function ProductPage(){
   const navigate = useNavigate()
+  
+  const goToNavigate = (e) => {
+    const search_term = e.target.input.value
+    navigate('/navigate/' + search_term)
 
+  }
   const [Quantity,setQuantity] = useState(1)
 
   const incrementQuantity = () => {
@@ -200,7 +205,7 @@ export default function ProductPage(){
       <Grid container spacing={2}>
 
         <Grid xs={12}>
-          <TopBar/>
+          <TopBar submitfunc={goToNavigate}/>
         </Grid>
 
 

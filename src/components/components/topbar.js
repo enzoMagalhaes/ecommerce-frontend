@@ -6,9 +6,9 @@ import Toolbar from '@mui/material/Toolbar';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import {makeStyles} from '@mui/styles'
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Stack from '@mui/material/Stack';
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Badge from '@mui/material/Badge';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Button from '@mui/material/Button';
@@ -124,16 +124,13 @@ export default function TopBar(props) {
     };
     const apiUrl = "http://127.0.0.1:8000/auth/check_token"
     fetch(apiUrl,requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        if(data.auth_status == "OK"){
+      .then(response => {
+        if(response.ok){
           setLoggedin(true)
         }else{
           setLoggedin(false)
         }
       })
-
-    return Loggedin
   }
 
   const refresh_token = () => {
@@ -161,8 +158,9 @@ export default function TopBar(props) {
 
 
   const handle_token = () => {
-    const is_logged_in = check_token()
-    if(is_logged_in == false){
+    check_token()
+
+    if(Loggedin == false){
       refresh_token()
     }
   }
@@ -199,7 +197,41 @@ export default function TopBar(props) {
 
   }
 
+  const [WishlistCount,setWishlistCount] = useState(0)
+  const [CartCount,setCartCount] = useState(0)
 
+  const getCounts = () => {
+
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        }, 
+    };
+    var apiUrl = "http://127.0.0.1:8000/user/wishlist"
+    fetch(apiUrl,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        var count = data.length
+        setWishlistCount(count)
+      })
+
+    apiUrl = "http://127.0.0.1:8000/user/cart"
+    fetch(apiUrl,requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        var count = data.length
+        setCartCount(count)
+      })    
+
+  }
+
+
+  useEffect( () =>  {
+    getCounts()
+  }, []) 
 
 
 
@@ -212,7 +244,7 @@ export default function TopBar(props) {
               <Grid item xs={2.5}/>
               <Grid item xs={3.5}>
                 <Stack direction="row" alignItems="center" spacing={2}>
-                  <FavoriteBorderOutlinedIcon onClick={goToWishList} />
+                  <FavoriteIcon onClick={goToWishList} />
                   <ShoppingCartIcon onClick={goToCart}/>
                   <Button variant="outlined" className={classes.signin} disableRipple='true'
                   onClick={goToLogin}
@@ -238,13 +270,6 @@ export default function TopBar(props) {
                   </Button>
                 </Stack>
               </Grid>
-
-
-
-                  
-
-
-
         </>
       )
 
@@ -256,8 +281,14 @@ export default function TopBar(props) {
               <Grid item xs={3}/>
               <Grid item xs={3}>
                 <Stack direction="row" alignItems="center" spacing={2}>
-                  <FavoriteBorderOutlinedIcon/>
-                  <ShoppingCartIcon onClick={goToCart}/>
+
+                  <Badge badgeContent={WishlistCount} color="secondary">
+                    <FavoriteIcon onClick={goToWishList} />
+                  </Badge>
+                  <Badge badgeContent={CartCount} color="secondary">
+                    <ShoppingCartIcon onClick={goToCart}/>
+                  </Badge>
+
                   <Button variant="outlined" className={classes.signin} disableRipple='true'
                   onClick={goToHistory}
                   sx={{
