@@ -11,6 +11,7 @@ import TopBar from './components/topbar.js'
 import Product from './components/cart_product.js'
 import SendRequest from '../api_utils.js'
 import {useNavigate} from 'react-router-dom'
+import baseurl from '../media_url.js'
 
 export default function NavigationPage(){
   const navigate = useNavigate()
@@ -22,7 +23,6 @@ export default function NavigationPage(){
   }
 
   const [Products,setProducts] = useState({loading: true,products: null})
-  const baseurl = 'http://127.0.0.1:8000' //fix this later
 
   const getUserWishlist = () => {
 

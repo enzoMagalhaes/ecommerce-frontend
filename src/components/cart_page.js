@@ -12,6 +12,7 @@ import TopBar from './components/topbar.js'
 import Product from './components/cart_product.js'
 import {useNavigate} from 'react-router-dom'
 import SendRequest from '../api_utils.js'
+import baseurl from '../media_url.js'
 
 export default function CartPage(){
   const navigate = useNavigate()
@@ -26,8 +27,6 @@ export default function CartPage(){
   }
 
   const [Products,setProducts] = useState({loading: true,products: null})
-
-  const baseurl = 'http://127.0.0.1:8000' //fix this later
 
   const getCartProducts = () => {
 
@@ -89,7 +88,6 @@ export default function CartPage(){
   const delete_function = (e) => {
     const product_card = e.target.parentElement.parentElement.parentElement
     const id = product_card.id
-    console.log(id)
     const data = {product_id: id}
 
     const apiUrl = "/user/delcart"

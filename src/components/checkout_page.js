@@ -79,8 +79,6 @@ export default function CheckoutPage(){
 
   const [Products,setProducts] = useState({loading: true,products: null})
 
-  const baseurl = 'http://127.0.0.1:8000' //fix this later
-
   const getCartProducts = () => {
     
     const apiUrl = "/user/cart"
