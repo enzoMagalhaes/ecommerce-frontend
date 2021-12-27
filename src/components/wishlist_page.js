@@ -11,7 +11,6 @@ import TopBar from './components/topbar.js'
 import Product from './components/cart_product.js'
 import SendRequest from '../api_utils.js'
 import {useNavigate} from 'react-router-dom'
-import baseurl from '../media_url.js'
 
 export default function NavigationPage(){
   const navigate = useNavigate()
@@ -63,7 +62,7 @@ export default function NavigationPage(){
       if (Products.products.length != 0){
         return Products.products.map(product =>
                     <Product key={product.id} deletefunc={delete_function} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
-                    img={baseurl+product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
+                    img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
                 )
       }else {
         return <p style={{marginLeft: 10}}> Ainda nao tem nenhum produto na Lista de Desejos!</p>
