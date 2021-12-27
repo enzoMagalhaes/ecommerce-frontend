@@ -25,13 +25,13 @@ export default function NavigationPage(){
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <TopBar submitfunc={goToNavigate}/>
         </Grid>
 
         <ImageSlider/>
 
-        <Grid xs={12}>
+        <Grid item xs={12}>
 
           <Typography sx={{ textAlign:"center", fontSize:20,color:"#545454"}} gutterBottom>
 
@@ -40,31 +40,31 @@ export default function NavigationPage(){
 
         </Grid>
 
-        <Grid xs={1}/>
+        <Grid item xs={1}/>
 
-        <Grid xs={2.425}>
+        <Grid item xs={2.425}>
           <Offercard img="/card1.webp"/>
         </Grid>
 
-        <Grid xs={0.1}/>
+        <Grid item xs={0.1}/>
 
-        <Grid xs={2.425}>
+        <Grid item xs={2.425}>
           <Offercard img="/card2.webp"/>
         </Grid>
 
-        <Grid xs={0.1}/>
+        <Grid item xs={0.1}/>
 
-        <Grid xs={2.425}>
+        <Grid item xs={2.425}>
           <Offercard img="/card3.webp"/>
         </Grid>
 
-        <Grid xs={0.1}/>
+        <Grid item xs={0.1}/>
 
-        <Grid xs={2.425}>
+        <Grid item xs={2.425}>
           <Offercard img="/card4.webp"/>
         </Grid>
 
-        <Grid xs={1}/>
+        <Grid item xs={1}/>
       </Grid>
     </Box>
 

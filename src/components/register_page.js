@@ -1,12 +1,11 @@
 
 
-import React , {useState,useEffect} from 'react'
+import React , {useState} from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
 import SendRequest from '../api_utils.js'
 
@@ -36,7 +35,7 @@ export default function Register(){
     const confirm_password = document.getElementById("confirm_password").value
 
 
-    if (password != confirm_password){
+    if (password !== confirm_password){
       alert("password didnt match!")
       return;
     }

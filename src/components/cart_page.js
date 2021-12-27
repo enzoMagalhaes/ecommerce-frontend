@@ -108,7 +108,7 @@ export default function CartPage(){
     }
     else{
       // need to return the map directly
-      if (Products.products.length != 0){
+      if (Products.products.length !== 0){
         return Products.products.map(product =>
                     <Product deletefunc={delete_function} key={product.id} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
@@ -138,9 +138,9 @@ export default function CartPage(){
           <Paper elevation={3}>
             <Grid container> 
 
-              <Grid xs={1}/>
+              <Grid item xs={1}/>
 
-              <Grid xs={9}>
+              <Grid item xs={9}>
                 <Typography variant="h4" sx={{marginTop:1,marginBottom:2}}>
                   Carrinho
                 </Typography>
@@ -148,7 +148,7 @@ export default function CartPage(){
                 {render_products()}
               </Grid>
 
-              <Grid xs={1}/>
+              <Grid item xs={1}/>
 
             </Grid>
           </Paper>

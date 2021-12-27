@@ -10,11 +10,8 @@ import TextField from '@mui/material/TextField';
 import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
 
-import {makeStyles} from '@mui/styles'
 import {useNavigate} from 'react-router-dom'
-
 import SendRequest from '../api_utils.js'
-
 
 import IconButton from '@mui/material/IconButton';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
@@ -56,7 +53,7 @@ export default function ProductPage(){
         setProduct(product_data)
       })
 
-  }, []) 
+  }, [product_id]) 
 
 
 
@@ -114,7 +111,6 @@ export default function ProductPage(){
 
         <Typography color="text.secondary" variant="subtitle1" sx={{marginTop: 3}}>
           <LocalShippingOutlinedIcon sx={{color: '#4caf50'}}/> Frete para todo Brasil: {Product.price}
-
         </Typography> 
 
 
@@ -154,20 +150,7 @@ export default function ProductPage(){
       product_id: parseInt(product_id)
 
     }
-
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Authorization': localStorage.getItem('access_token') ? 'Bearer ' + localStorage.getItem('access_token') : null,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        }, 
-        body: JSON.stringify(data)
-    };
-
-    console.log(requestOptions.body)
-
-
+    
     const apiUrl = "/user/addcart"
     SendRequest(apiUrl,"POST",data,true)
 
@@ -194,7 +177,7 @@ export default function ProductPage(){
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <TopBar submitfunc={goToNavigate}/>
         </Grid>
 
@@ -332,9 +315,6 @@ export default function ProductPage(){
 
                   </Grid>
 
-
-
-
                   <Grid item xs={7} sx={{marginTop: 10, marginLeft:1.5}}>
                     <Button variant="contained"
 
@@ -353,12 +333,6 @@ export default function ProductPage(){
                   </Grid>
 
                 </Grid>
-
-
-
-
-
-
 
               </Grid>
 

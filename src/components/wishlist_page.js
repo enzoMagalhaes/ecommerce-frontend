@@ -59,7 +59,7 @@ export default function NavigationPage(){
     }
     else{
       // need to return the map directly
-      if (Products.products.length != 0){
+      if (Products.products.length !== 0){
         return Products.products.map(product =>
                     <Product key={product.id} deletefunc={delete_function} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
@@ -91,9 +91,9 @@ export default function NavigationPage(){
           <Paper elevation={3}>
             <Grid container> 
 
-              <Grid xs={1}/>
+              <Grid item xs={1}/>
 
-              <Grid xs={9}>
+              <Grid item xs={9}>
                 <Typography variant="h4" sx={{marginTop:1,marginBottom:2}}>
                   Lista de Desejos
                 </Typography>
@@ -102,7 +102,7 @@ export default function NavigationPage(){
 
               </Grid>
 
-              <Grid xs={1}/>
+              <Grid item xs={1}/>
 
             </Grid>
           </Paper>

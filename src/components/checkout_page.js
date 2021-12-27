@@ -176,7 +176,7 @@ export default function CheckoutPage(){
 
         <Grid item xs={1}/>
 
-        <Grid item xs={4} sx={{}}>
+        <Grid item xs={4}>
           <Paper elevation={3}>
             <Grid container>
               <Grid item xs={0.5}/>

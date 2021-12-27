@@ -114,42 +114,41 @@ export default function TopBar(props) {
   const [Loggedin,setLoggedin] = useState(false)
   const [Refresh,setRefresh] = useState(false)
 
-  const check_token = () => {
-    
-    SendRequest("/auth/check_token","GET",null,true)
-      .then(response => {
-        if(response.ok){
-          setLoggedin(true)
-        }else{
-          setLoggedin(false)
-        }
-      })
-  }
-
-  const refresh_token = () => {
-
-    const refresh = localStorage.getItem('refresh_token') || null
-    var data = {refresh: refresh}
-
-    SendRequest("/auth/token/refresh","POST",data,true)
-      .then(response => response.json())
-      .then(data => {
-        localStorage.setItem('access_token',data.access)
-        setRefresh(true)
-
-      })
-  }
-
-
-
-  const handle_token = () => {
-    check_token()
-    if(Loggedin == false){
-      refresh_token()
-    }
-  }
 
   useEffect( () =>  {
+    const check_token = () => {
+      
+      SendRequest("/auth/check_token","GET",null,true)
+        .then(response => {
+          if(response.ok){
+            setLoggedin(true)
+          }else{
+            setLoggedin(false)
+          }
+        })
+    }
+
+    const refresh_token = () => {
+
+      const refresh = localStorage.getItem('refresh_token') || null
+      var data = {refresh: refresh}
+
+      SendRequest("/auth/token/refresh","POST",data,true)
+        .then(response => response.json())
+        .then(data => {
+          localStorage.setItem('access_token',data.access)
+          setRefresh(true)
+
+        })
+    }
+
+    const handle_token = () => {
+      check_token()
+      if(Loggedin === false){
+        refresh_token()
+      }
+    }
+
     handle_token()
   }, [Refresh]) 
 
@@ -202,7 +201,7 @@ export default function TopBar(props) {
 
   const handle_loggedin_buttons = () => {
 
-    if(Loggedin==false){
+    if(Loggedin===false){
 
       return(
         <>
@@ -211,7 +210,7 @@ export default function TopBar(props) {
                 <Stack direction="row" alignItems="center" spacing={2}>
                   <FavoriteIcon onClick={goToWishList} />
                   <ShoppingCartIcon onClick={goToCart}/>
-                  <Button variant="outlined" className={classes.signin} disableRipple='true'
+                  <Button variant="outlined" className={classes.signin} disableRipple
                   onClick={goToLogin}
                   sx={{
                     ':hover': {
@@ -222,7 +221,7 @@ export default function TopBar(props) {
                   >
                     Fazer Login
                   </Button>
-                  <Button variant="contained"  className={classes.register} disableRipple='true'
+                  <Button variant="contained"  className={classes.register} disableRipple
                   onClick={goToRegister}
                   sx={{
                     ':hover': {
@@ -254,7 +253,7 @@ export default function TopBar(props) {
                     <ShoppingCartIcon onClick={goToCart}/>
                   </Badge>
 
-                  <Button variant="outlined" className={classes.signin} disableRipple='true'
+                  <Button variant="outlined" className={classes.signin} disableRipple
                   onClick={goToHistory}
                   sx={{
                     ':hover': {
@@ -265,7 +264,7 @@ export default function TopBar(props) {
                   >
                     Perfil
                   </Button>              
-                  <Button variant="contained"  className={classes.register} disableRipple='true'
+                  <Button variant="contained"  className={classes.register} disableRipple
                   onClick={logout}
                   sx={{
                     ':hover': {
@@ -280,19 +279,10 @@ export default function TopBar(props) {
               </Grid>
         </>
       )
-
-
     }
-
-
   }
 
-
-
-
-
   const classes = useStyles()
-  const mobileMenuId = 'primary-search-account-menu-mobile';
   return (
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
@@ -300,7 +290,7 @@ export default function TopBar(props) {
           <Grid container spacing={0} alignItems="center" justify="center">
 
               <Grid item xs={1}>
-                  <img src="/store-logo.png" className={classes.logo} onClick={goToIndex}/>
+                  <img src="/store-logo.png" alt="Loja Online!" className={classes.logo} onClick={goToIndex}/>
               </Grid>
 
               <Grid item xs={1}>
@@ -313,7 +303,7 @@ export default function TopBar(props) {
                       <SearchIcon />
                     </SearchIconWrapper>
 
-                    <form onSubmit={props.submitfunc} autocomplete="off">
+                    <form onSubmit={props.submitfunc} autoComplete="off">
                       
                       <StyledInputBase
                         onChange={props.searchfunc}

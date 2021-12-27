@@ -44,20 +44,21 @@ export default function NavigationPage(){
     setSearch(e.target.value)
   }
 
-  const getProductsSearch = () => {
-    setProducts({loading:true})
-    const apiUrl = '/search?search=' + Search
-    SendRequest(apiUrl,"GET",null,false)
-      .then(response => response.json())
-      .then(products => {
-        setProducts({loading:false,products:products})
-      })
-  }
 
   useEffect(() => {
-    getProductsSearch()
-  }, [Search])
+    const getProductsSearch = () => {
+      setProducts({loading:true})
+      const apiUrl = '/search?search=' + Search
+      SendRequest(apiUrl,"GET",null,false)
+        .then(response => response.json())
+        .then(products => {
+          setProducts({loading:false,products:products})
+        })
+    }
 
+    getProductsSearch()
+
+  }, [Search])
 
 
   /////////////////////////////////////////////
@@ -83,33 +84,35 @@ export default function NavigationPage(){
   const [rating,setrating] = useState(null)
 
 
-  const getProductsFilter = () => {
-    setProducts({loading:true})
-
-    const apiUrl = '/filter?celulares=' + celulares + 
-          '&eletronicos=' + eletronicos +
-          '&relogios=' + relogios +
-          '&calcados=' + calcados +
-          '&bolsas=' + bolsas +
-          '&roupas=' + roupas +
-          '&nacional=' + nacional +
-          '&importado=' + importado +
-          '&novo=' + novo +
-          '&usado=' + usado +
-          '&promocao=' + promocao +
-          '&frete_gratis=' + frete_gratis +
-          '&min_price=' + min_price +
-          '&max_price=' + max_price +
-          '&rating=' + rating;
-
-    SendRequest(apiUrl,"GET",null,false)
-      .then(response => response.json())
-      .then(products => {
-        setProducts({loading:false,products:products})
-      })
-  }
 
   useEffect(() => {
+
+    const getProductsFilter = () => {
+      setProducts({loading:true})
+
+      const apiUrl = '/filter?celulares=' + celulares + 
+            '&eletronicos=' + eletronicos +
+            '&relogios=' + relogios +
+            '&calcados=' + calcados +
+            '&bolsas=' + bolsas +
+            '&roupas=' + roupas +
+            '&nacional=' + nacional +
+            '&importado=' + importado +
+            '&novo=' + novo +
+            '&usado=' + usado +
+            '&promocao=' + promocao +
+            '&frete_gratis=' + frete_gratis +
+            '&min_price=' + min_price +
+            '&max_price=' + max_price +
+            '&rating=' + rating;
+
+      SendRequest(apiUrl,"GET",null,false)
+        .then(response => response.json())
+        .then(products => {
+          setProducts({loading:false,products:products})
+        })
+    }
+    
     if (firstUpdate.current) {
       firstUpdate.current = false;
       return;
@@ -126,7 +129,7 @@ export default function NavigationPage(){
     }
     else{
       // need to return the map directly
-      if (Products.products.length != 0){
+      if (Products.products.length !== 0){
         return Products.products.map(product =>
                     <Product key={product.id} goToProductPage={goToProductPage} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
@@ -146,7 +149,7 @@ export default function NavigationPage(){
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <TopBar submitfunc={cancelSubmit} search_term={Search} searchfunc={onSearchChange}/>
         </Grid>
 

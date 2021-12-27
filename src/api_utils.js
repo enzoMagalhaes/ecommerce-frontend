@@ -22,7 +22,7 @@ const send_request = (url,method='GET',data=null,auth=false) => {
 
 	var requestOptions = null
 
-	if (method == "POST"){
+	if (method === "POST"){
 	    requestOptions = {
 	        method: method,
 	        headers: headers,

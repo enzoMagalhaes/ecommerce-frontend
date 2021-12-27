@@ -1,12 +1,11 @@
 
 
-import React , {useState,useEffect} from 'react'
+import React , {useState} from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
 
 import {useNavigate} from 'react-router-dom'
@@ -56,7 +55,7 @@ export default function Login(){
 
 
   const render_form_status = () => {
-    if (Success == false){
+    if (Success === false){
 
           <Typography variant="subtitle1" sx={{color:'red'}}>
               Something went wrong.

@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 import TopBar from './components/topbar.js'
-import Paper from '@mui/material/Paper';
 
 import {useNavigate} from 'react-router-dom'
 
@@ -22,16 +21,16 @@ export default function NavigationPage(){
 
   return (
     <React.Fragment>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box >
       <Grid container spacing={2}>
 
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <TopBar submitfunc={goToNavigate}/>
         </Grid>
 
-        <Grid xs={2}/>
+        <Grid item xs={2}/>
 
-        <Grid xs={8} sx={{marginTop:25}}>
+        <Grid item xs={8} sx={{marginTop:25}}>
 
 
             <Typography sx={{textAlign:"center",fontWeight:"bold",fontSize:25}}>
@@ -53,7 +52,7 @@ export default function NavigationPage(){
 
         </Grid>
 
-        <Grid xs={2}/>
+        <Grid item xs={2}/>
 
 
       </Grid>
