@@ -11,17 +11,7 @@ import SendRequest from '../api_utils.js'
 
 
 export default function Register(){
-
-  // useEffect( () =>  {
-    
-
-  // }, []) 
-
-
-    // fields = ('email','user_name','password') (REGISTER)
-// email password (LOGIN)
-
-
+  
   const [Success,setSuccess] = useState(null)
 
   const register_user = (e) => {

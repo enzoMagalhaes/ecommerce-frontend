@@ -72,8 +72,13 @@ export default function CheckoutPage(){
 
     const apiUrl = "/user/make_transaction"
     SendRequest(apiUrl,"POST",data,true)
+      .then(response => {
 
-
+        if (response.ok){
+          navigate("/history")
+        }
+        
+      })
   }
 
 
@@ -105,6 +110,8 @@ export default function CheckoutPage(){
       }
 
       var total_discount = total-discounted_total
+      total = total.toFixed(2)
+      discounted_total=discounted_total.toFixed(2)
       total_discount = total_discount.toFixed(2)
 
       return(

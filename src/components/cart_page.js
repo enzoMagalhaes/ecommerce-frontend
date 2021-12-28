@@ -54,21 +54,17 @@ export default function CartPage(){
 
       var total_discount = (1-(discounted_total/total))*100
       total_discount = total_discount.toFixed(2)
-
-      const result = {
-        discountedTotal:discounted_total,
-        total:total,
-        totalDiscount:total_discount
-      }
+      discounted_total = discounted_total.toFixed(2)
+      total = total.toFixed(2)
 
       return(
             <div>
                       <Typography variant="h4">
-                        R${result.discountedTotal}
+                        R${discounted_total}
                       </Typography>                                      
 
                       <Typography variant="subtitle2" color="text.secondary">
-                        <del>R${result.total}</del> %{result.totalDiscount} OFF
+                        <del>R${total}</del> %{total_discount} OFF
                       </Typography>  
             </div>
       )

@@ -41,9 +41,6 @@ const send_request = (url,method='GET',data=null,auth=false) => {
 
     const fetch_url = api_url + url
 
-
-    console.log(requestOptions)
-
     return fetch(fetch_url,requestOptions)
 
 
