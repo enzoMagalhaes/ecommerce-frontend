@@ -181,7 +181,8 @@ export default function TopBar(props) {
 
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-
+    goToIndex()
+    
   }
 
   const [WishlistCount,setWishlistCount] = useState(0)
