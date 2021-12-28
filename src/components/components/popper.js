@@ -1,31 +1,110 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Popper from '@mui/material/Popper';
-import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
 
 
-export default function SimplePopper() {
+export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
+
+  const [categoriesCollapse, setcategoriesCollapse] = React.useState(true);
+
+  const categories_click = () => {
+    setcategoriesCollapse(!categoriesCollapse);
+  };
+
 
   return (
     <div>
-      <Link underline="none" sx={{color: 'white' ,fontWeight: 10}} onMouseOver={handleClick}>
+      <Button
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        diableRipple
+        sx={{color:'white'}}
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
         Categorias
-      </Link>
+      </Button>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
 
-      <Popper id={id} open={open} anchorEl={anchorEl}>
-        <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-          The content of the Popper.
-        </Box>
-      </Popper>
+          <List
+            sx={{ width: '100%', maxWidth: 360 }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+
+
+
+            <ListItemButton>
+              <ListItemText primary="Celulares"/>
+            </ListItemButton>
+
+            <ListItemButton>
+              <ListItemText primary="Eletrônicos" />
+            </ListItemButton>
+
+            <ListItemButton>
+              <ListItemText primary="Relógios" />
+            </ListItemButton>
+
+            <ListItemButton>
+              <ListItemText primary="Calçados" />
+            </ListItemButton>
+
+            <ListItemButton>
+              <ListItemText primary="Bolsas" />
+            </ListItemButton>
+
+            <ListItemButton>
+              <ListItemText primary="Roupas Masculinas" />
+            </ListItemButton>
+
+
+
+            <ListItemButton onClick={categories_click} diableRipple>
+              <ListItemText primary="Inbox" />
+              {categoriesCollapse ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+
+
+            <Collapse in={categoriesCollapse} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }} diableRipple>
+
+
+                  <ListItemText primary="Starred" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+
+
+
+          </List>          
+      </Menu>
     </div>
   );
 }

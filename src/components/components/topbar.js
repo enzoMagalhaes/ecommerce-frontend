@@ -99,19 +99,32 @@ export default function TopBar(props) {
   const goToRegister = () => {
     navigate('/register')
   }  
+
   const goToCart = () => {
-    navigate('/cart')
+    if(Loggedin){
+      navigate('/cart')
+    }else{
+      navigate('/login')
+    }
   }
 
   const goToHistory = () => {
-    navigate('/history')
+    if(Loggedin){
+      navigate('/history')
+    }else{
+      navigate('/login')
+    }
   }  
   
   const goToWishList = () => {
-    navigate('/wishlist')
+    if(Loggedin){
+      navigate('/wishlist')
+    }else{
+      navigate('/login')
+    }
   }
 
-  const [Loggedin,setLoggedin] = useState(false)
+  const [Loggedin,setLoggedin] = useState(null)
   const [Refresh,setRefresh] = useState(false)
 
 
@@ -166,6 +179,8 @@ export default function TopBar(props) {
         }
       })
 
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
 
   }
 
@@ -237,8 +252,7 @@ export default function TopBar(props) {
         </>
       )
 
-
-    }else{
+    }else if(Loggedin===true){
 
       return(
         <>

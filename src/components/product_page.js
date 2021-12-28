@@ -9,6 +9,7 @@ import Rating from '@mui/material/Rating';
 import TextField from '@mui/material/TextField';
 import TopBar from './components/topbar.js'
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 import {useNavigate} from 'react-router-dom'
 import SendRequest from '../api_utils.js'
@@ -18,6 +19,8 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import {useParams} from 'react-router-dom'
 
@@ -52,7 +55,6 @@ export default function ProductPage(){
       .then(product_data => {
         setProduct(product_data)
       })
-
   }, [product_id]) 
 
 
@@ -97,23 +99,24 @@ export default function ProductPage(){
     if(Product.free_shipping){
       return (
 
-
-        <Typography color="text.secondary" variant="subtitle1" sx={{marginTop: 3}}>
-          <LocalShippingOutlinedIcon sx={{color: '#76ff03'}}/> Frete Gratis para todo Brasil !
-
-        </Typography> 
+        <Stack direction="row" alignItems="center" spacing={1} sx={{marginTop:3}}>
+          <LocalShippingOutlinedIcon sx={{color: '#76ff03'}}/> 
+          <Typography color="text.secondary" variant="subtitle1">
+            Frete Gratis para todo Brasil !
+          </Typography> 
+        </Stack>
 
 
       )
     }else{
 
       return (
-
-        <Typography color="text.secondary" variant="subtitle1" sx={{marginTop: 3}}>
-          <LocalShippingOutlinedIcon sx={{color: '#4caf50'}}/> Frete para todo Brasil: {Product.price}
-        </Typography> 
-
-
+        <Stack direction="row" alignItems="center" spacing={1} sx={{marginTop:3}}>
+          <LocalShippingOutlinedIcon sx={{color: '#4caf50'}}/>
+          <Typography color="text.secondary" variant="subtitle1">
+            Frete para todo Brasil: {Product.price}
+          </Typography> 
+        </Stack>
       )
 
     }
@@ -128,21 +131,15 @@ export default function ProductPage(){
     if (Product.is_promotion){
 
       return (
-
           <Typography variant="subtitle1" sx={{marginTop: 3 ,color: '#fc9f12'}}>
                       
               {Product.discount_rate * 100}% de desconto
 
           </Typography>
-
-
       )
-
-
     }
 
   }
-
 
   const addToCart = () => {
 
@@ -171,17 +168,86 @@ export default function ProductPage(){
 
   }
 
+  const [WishIcon,setWishIcon] = useState(false)
+
+  useEffect( () =>  {
+
+    const init_wish_icon = () => {
+      const apiUrl = '/user/wishlist'
+      SendRequest(apiUrl,"GET",null,true)
+        .then(response => response.json())
+        .then(products_data => {
+            
+          for(var i = 0; i < products_data.length; i++) {
+            var wish_product = products_data[i];
+            if(parseInt(product_id) === wish_product.id){
+              setWishIcon(true)
+            }
+          }        
+
+        })
+    }
+
+    init_wish_icon()
+
+  } , [product_id]) 
+
+  const addwish = () => {
+
+    if(WishIcon ===false){
+    const data = {product_id:parseInt(product_id)}
+
+    const apiUrl = '/user/addwish'
+    SendRequest(apiUrl,"POST",data,true)
+      .then(response => {
+        if (response.ok){
+          setWishIcon(true)
+        }
+
+      })
+    }else{
+
+    const data = {product_id:parseInt(product_id)}
+
+    const apiUrl = '/user/delwish'
+    SendRequest(apiUrl,"POST",data,true)
+      .then(response => {
+        if (response.ok){
+
+          console.log("ok")
+          setWishIcon(false)
+          
+        }
+
+      })      
+
+    }
+
+  }
+
+
+  const handle_wish = () => {
+
+      if(WishIcon){
+        return (
+          <FavoriteIcon sx={{color: "#ff0000"}} onClick={addwish}/>
+        ) 
+      }else{
+        return (
+          <FavoriteBorderIcon sx={{color: "#ff0000"}} onClick={addwish}/>
+        ) 
+      }
+
+  }
+
+
 
   return (
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <Grid item xs={12}>
-          <TopBar submitfunc={goToNavigate}/>
-        </Grid>
-
-
+        <TopBar submitfunc={goToNavigate}/>
 
         <Grid item xs={1} />
 
@@ -220,27 +286,22 @@ export default function ProductPage(){
                   </Grid>
 
 
-                  <Grid item xs={2}>
-                    <Rating sx={{marginTop: 3}} value={Product.rating || 0} readOnly />
-                  </Grid>           
+                  <Grid item xs={9}>
+                    <Stack direction="row" alignItems="center" spacing={2}>
 
-                  <Grid item xs={3}>
+                      <Rating value={Product.rating || 0} readOnly />
 
-                    <Typography variant="subtitle1" sx={{marginTop: 3,marginLeft:2}}>
-                      
-                    {Product.amount_sold} vendidos
+                      <Typography variant="subtitle1" sx={{marginTop: 3,marginLeft:2}}>                        
+                        {Product.amount_sold} vendidos
+                      </Typography>
 
-                    </Typography>
+                      {get_discount()}
 
-                  </Grid>                  
-
-                  <Grid item xs={2}>
-
-                    {get_discount()}
-                    
+                      {handle_wish()}
+                    </Stack>
                   </Grid>
 
-                  <Grid item xs={5}/>
+                  <Grid item xs={3}/>
 
                   <Grid item xs={6}>
 

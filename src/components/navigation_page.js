@@ -149,9 +149,7 @@ export default function NavigationPage(){
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <Grid item xs={12}>
-          <TopBar submitfunc={cancelSubmit} search_term={Search} searchfunc={onSearchChange}/>
-        </Grid>
+        <TopBar submitfunc={cancelSubmit} search_term={Search} searchfunc={onSearchChange}/>
 
         <Grid item xs={3}>
          <Filters 
