@@ -1,7 +1,7 @@
 
 
-// const api_url = 'https://ecommerce-djangorestapi.herokuapp.com'
-const api_url = "http://localhost:8000"
+const api_url = 'https://ecommerce-djangorestapi.herokuapp.com'
+// const api_url = "http://localhost:8000"
 
 
 const send_request = (url,method='GET',data=null,auth=false) => {
