@@ -21,7 +21,7 @@ export default function NavigationPage(){
   const cancelSubmit = (e) => {
     e.preventDefault()
   }
-
+  
 
   const navigate = useNavigate()
 
@@ -34,12 +34,24 @@ export default function NavigationPage(){
 
   const [Products,setProducts] = useState({loading: true,products: null})
 
+  /////////////////////////////////////
+  // Pagination utils
+  const [num_pages,setnum_pages] = useState(1)
+  const num_product_per_page = 20
+  const [page,setpage] = useState(1)
+
+  const handle_pagination = (event, value) => {
+    setpage(value);
+  };
+  /////////////////////////////////////
+
+
   ////////////////////////////////////////////
 
   // SEARCH ENGINE
 
   const [Search,setSearch] = useState(search_term || "")
-  
+
   const onSearchChange = (e) => {
     setSearch(e.target.value)
   }
@@ -53,6 +65,9 @@ export default function NavigationPage(){
         .then(response => response.json())
         .then(products => {
           setProducts({loading:false,products:products})
+          var num_products = products.length
+          setpage(1)
+          setnum_pages(Math.ceil(num_products/num_product_per_page))
         })
     }
 
@@ -110,6 +125,9 @@ export default function NavigationPage(){
         .then(response => response.json())
         .then(products => {
           setProducts({loading:false,products:products})
+          var num_products = products.length
+          setnum_pages(Math.ceil(num_products/num_product_per_page))
+          setpage(1)
         })
     }
     
@@ -122,15 +140,17 @@ export default function NavigationPage(){
   }, [celulares,eletronicos,relogios,calcados,bolsas,roupas,nacional,importado,novo,usado,promocao,frete_gratis,min_price,max_price,rating])
   /////////////////////////////////////////////////////////
 
-
   const render_products = () => {
     if(Products.loading){
       return <CircularProgress sx={{ color: '#fc2112', marginLeft: 10,marginTop:10}}/>
     }
     else{
-      // need to return the map directly
+      
+
       if (Products.products.length !== 0){
-        return Products.products.map(product =>
+        var products_slice = Products.products.slice((page-1)*num_product_per_page,(page)*num_product_per_page)
+        
+        return products_slice.map(product =>
                     <Product key={product.id} goToProductPage={goToProductPage} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
                 )
@@ -181,11 +201,10 @@ export default function NavigationPage(){
 
         </Grid>
 
-        <Grid item xs={3}>
-        </Grid>
+        <Grid item xs={6.5}/>
 
-        <Grid item xs={9}>
-          <Pagination count={10} size="large"  sx={{position:'absolute'}}/>
+        <Grid item xs={5.5}>
+          <Pagination count={num_pages} page={page} onChange={handle_pagination} size="large"  sx={{marginBottom:2}}/>
         </Grid>
 
       </Grid>
