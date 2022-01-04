@@ -69,11 +69,7 @@ export default function CartPage(){
             </div>
       )
     }
-
-    
   }
-
-
 
   useEffect(() => {
     getCartProducts()
@@ -90,7 +86,6 @@ export default function CartPage(){
       .then(response => {
         if (response.ok){
           product_card.remove()
-
         }
       })
 
@@ -104,11 +99,18 @@ export default function CartPage(){
     }
     else{
       // need to return the map directly
+      var counter = 0
       if (Products.products.length !== 0){
         return Products.products.map(product =>
-                    <Product deletefunc={delete_function} key={product.id} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
+                {
+                  counter += 1      
+                  return (
+                    <Product deletefunc={delete_function} key={counter} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
-                )
+                  )
+                }
+
+              )
       }else {
         return <p style={{marginLeft: 10}}> Ainda nao tem nenhum produto no carrinho!</p>
 

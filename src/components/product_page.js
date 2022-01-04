@@ -32,6 +32,7 @@ export default function ProductPage(){
     navigate('/navigate/' + search_term)
 
   }
+
   const [Quantity,setQuantity] = useState(1)
 
   const incrementQuantity = () => {
@@ -141,13 +142,21 @@ export default function ProductPage(){
 
   }
 
+
+  const [Loggedin,setLoggedin] = useState(null)
+
   const addToCart = () => {
+
+    if(Loggedin === false){
+      navigate('/login')
+    }
 
     const data = {
       product_id: parseInt(product_id)
 
     }
     
+
     const apiUrl = "/user/addcart"
     SendRequest(apiUrl,"POST",data,true)
 
@@ -155,6 +164,10 @@ export default function ProductPage(){
 
 
   const buyNow = () => {
+
+    if(Loggedin === false){
+      navigate('/login')
+    }
 
     const data = {product_id: parseInt(product_id)}
 
@@ -213,14 +226,9 @@ export default function ProductPage(){
     SendRequest(apiUrl,"POST",data,true)
       .then(response => {
         if (response.ok){
-
-          console.log("ok")
           setWishIcon(false)
-          
         }
-
       })      
-
     }
 
   }
@@ -247,7 +255,7 @@ export default function ProductPage(){
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <TopBar submitfunc={goToNavigate}/>
+        <TopBar submitfunc={goToNavigate} componentSetLoggedin={setLoggedin}/>
 
         <Grid item xs={1} />
 

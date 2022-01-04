@@ -166,6 +166,14 @@ export default function TopBar(props) {
   }, [Refresh]) 
 
 
+  const {componentSetLoggedin} = props
+  useEffect( () =>  { 
+      if (componentSetLoggedin){
+        componentSetLoggedin(Loggedin)
+      }
+    },[Loggedin,componentSetLoggedin])
+
+
 
   const logout = () => {
 
