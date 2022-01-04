@@ -58,12 +58,14 @@ export default function NavigationPage(){
       return <CircularProgress sx={{ color: '#fc2112', marginLeft: 10,marginTop:10}}/>
     }
     else{
-      // need to return the map directly
+      var counter = 0 
       if (Products.products.length !== 0){
-        return Products.products.map(product =>
-                    <Product key={product.id} deletefunc={delete_function} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
+        return Products.products.map(product =>{
+                  counter +=1
+                  return (
+                    <Product key={counter} deletefunc={delete_function} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
-                )
+                )})
       }else {
         return <p style={{marginLeft: 10}}> Ainda nao tem nenhum produto na Lista de Desejos!</p>
 

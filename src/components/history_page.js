@@ -40,10 +40,11 @@ export default function NavigationPage(){
       return <CircularProgress sx={{ color: '#fc2112', marginLeft: 10,marginTop:10}}/>
     }
     else{
-      // need to return the map directly
+      var counter = 0
       if (Products.products.length !== 0){
+        counter += 1
         return Products.products.map(product =>
-                    <Product key={product.id} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
+                    <Product key={counter} id={product.id} description={product.description} price={product.price} amount_sold={product.amount_sold} 
                     img={product.img} is_promotion={product.is_promotion} discount_rate={product.discount_rate} rating={product.rating}/>
                 )
       }else {

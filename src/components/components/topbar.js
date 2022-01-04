@@ -216,10 +216,27 @@ export default function TopBar(props) {
 
   }
 
+  const {addwishbadge,addcartbadge,wishvalue,cartvalue} = props
 
   useEffect( () =>  {
     getCounts()
   }, []) 
+
+  useEffect( () =>  {
+
+    if (addwishbadge){
+
+      wishvalue.current = WishlistCount
+      cartvalue.current = CartCount
+
+      addwishbadge.current = (num) => {
+        setWishlistCount(num)
+      }
+      addcartbadge.current = (num) => {
+        setCartCount(num)
+      }
+    }
+  }, [addwishbadge,addcartbadge,wishvalue,cartvalue,WishlistCount,CartCount]) 
 
 
 

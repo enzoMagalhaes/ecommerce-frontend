@@ -1,6 +1,6 @@
 
 
-import React , {useState,useEffect} from 'react'
+import React , {useState,useEffect,useRef} from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -145,6 +145,13 @@ export default function ProductPage(){
 
   const [Loggedin,setLoggedin] = useState(null)
 
+
+  const wishvalue = useRef(null)
+  const cartvalue = useRef(null)
+  const addwishbadge = useRef(null)
+  const addcartbadge = useRef(null)
+
+
   const addToCart = () => {
 
     if(Loggedin === false){
@@ -159,6 +166,11 @@ export default function ProductPage(){
 
     const apiUrl = "/user/addcart"
     SendRequest(apiUrl,"POST",data,true)
+      .then(response => {
+        if (response.ok){
+          addcartbadge.current(cartvalue.current+1)
+        }
+      })
 
   }
 
@@ -215,6 +227,7 @@ export default function ProductPage(){
       .then(response => {
         if (response.ok){
           setWishIcon(true)
+          addwishbadge.current(wishvalue.current + 1)
         }
 
       })
@@ -227,6 +240,8 @@ export default function ProductPage(){
       .then(response => {
         if (response.ok){
           setWishIcon(false)
+          addwishbadge.current(wishvalue.current - 1)
+
         }
       })      
     }
@@ -249,13 +264,14 @@ export default function ProductPage(){
   }
 
 
-
   return (
     <React.Fragment>
       <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
 
-        <TopBar submitfunc={goToNavigate} componentSetLoggedin={setLoggedin}/>
+        <TopBar submitfunc={goToNavigate} componentSetLoggedin={setLoggedin} 
+                wishvalue={wishvalue} cartvalue={cartvalue} 
+                addwishbadge={addwishbadge} addcartbadge={addcartbadge} />
 
         <Grid item xs={1} />
 
